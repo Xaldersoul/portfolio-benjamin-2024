@@ -134,7 +134,7 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-type ProjectPostDocumentDataSlicesSlice = TextBlockSlice;
+type ProjectPostDocumentDataSlicesSlice = ImageblockSlice | TextBlockSlice;
 
 /**
  * Content for Project Post documents
@@ -174,17 +174,6 @@ interface ProjectPostDocumentData {
   hover_image: prismic.ImageField<never>;
 
   /**
-   * Slice Zone field in *Project Post*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project_post.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#slices
-   */
-  slices: prismic.SliceZone<ProjectPostDocumentDataSlicesSlice>;
-
-  /**
    * Repo Link field in *Project Post*
    *
    * - **Field Type**: Link
@@ -204,7 +193,18 @@ interface ProjectPostDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  deploy_link: prismic.LinkField /**
+  deploy_link: prismic.LinkField;
+
+  /**
+   * Slice Zone field in *Project Post*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<ProjectPostDocumentDataSlicesSlice> /**
    * Meta Description field in *Project Post*
    *
    * - **Field Type**: Text
@@ -747,6 +747,51 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *Imageblock → Primary*
+ */
+export interface ImageblockSliceDefaultPrimary {
+  /**
+   * Image field in *Imageblock → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: imageblock.primary.image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for Imageblock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ImageblockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ImageblockSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Imageblock*
+ */
+type ImageblockSliceVariation = ImageblockSliceDefault;
+
+/**
+ * Imageblock Shared Slice
+ *
+ * - **API ID**: `imageblock`
+ * - **Description**: Imageblock
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ImageblockSlice = prismic.SharedSlice<
+  "imageblock",
+  ImageblockSliceVariation
+>;
+
+/**
  * Primary content in *Techlist → Primary*
  */
 export interface TechlistSliceDefaultPrimary {
@@ -901,6 +946,10 @@ declare module "@prismicio/client" {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      ImageblockSlice,
+      ImageblockSliceDefaultPrimary,
+      ImageblockSliceVariation,
+      ImageblockSliceDefault,
       TechlistSlice,
       TechlistSliceDefaultPrimary,
       TechlistSliceDefaultItem,

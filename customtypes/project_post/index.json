@@ -34,17 +34,6 @@
           "thumbnails": []
         }
       },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {
-            "text_block": {
-              "type": "SharedSlice"
-            }
-          }
-        }
-      },
       "repo_link": {
         "type": "Link",
         "config": {
@@ -59,6 +48,20 @@
           "label": "Deploy Link",
           "placeholder": "",
           "select": null
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "imageblock": {
+              "type": "SharedSlice"
+            },
+            "text_block": {
+              "type": "SharedSlice"
+            }
+          }
         }
       }
     },
